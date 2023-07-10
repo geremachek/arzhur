@@ -12,7 +12,23 @@
 	- `ESCAPE`: Enter command mode
 	- `ENTER`: Exit and print the contents of the current window to stdout
 * Command Mode
+	- `ESCAPE`: Enter editing mode
 	- `h`: Go backwards a tab
 	- `l`: Go forwards a tab
 	- `a`: Exit and print the contents of all of the windows joined by newlines to stdout
 	- `q`: Exit and return nothing
+
+**Merlin:**
+
+`arzhur` comes with a small package (`arzhur.mn`) for basic `merlin` interaction.
+
+* Commands
+	- `arzhur`: Open the first atom on the stack for editing
+	- `arzhur-stack`: Open the entire stack for editing
+	- `arzhur-edit`: Edit an atom and replace the current line with the result
+	- `arzhur-peer`: Edit a selected part of the current volume
+	- `arzhur-line`: Edit the current line
+
+**Screenshot:**
+
+![arzhur editing the text "Hello, Github!"](arzhur.png "arzhur")
