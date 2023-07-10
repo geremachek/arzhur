@@ -22,6 +22,12 @@ func (f *Frame) cursMove(forward bool) {
 	}
 }
 
+// reset the cursor position
+
+func (f *Frame) cursReset() {
+	f.x, f.y = 0, 0
+}
+
 // show the cursor at the current position
 
 func (f *Frame) showCurs() {

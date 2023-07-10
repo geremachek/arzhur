@@ -2,19 +2,40 @@ package frame
 
 import "github.com/gdamore/tcell"
 
-func (f *Frame) movePortal(dir rune) {
-	if dir == 'h' && f.index > 0 {
-		f.index -= 1
-	} else if dir == 'l' && f.index < len(f.portals)-1 {
-		f.index += 1
+// key presses result in a selection of portals, or not
+
+type portalSelection int
+
+const (
+	None portalSelection = iota
+	All
+	Current
+)
+
+func (f *Frame) movePortal(dir int) {
+	f.index += dir // change the index
+	len := len(f.portals)-1
+
+	// "loop back" if we are at the first or final window
+
+	if f.index < 0 {
+		f.index = len
+	} else if f.index > len {
+		f.index = 0
 	}
 
-	f.drawFrame()
-}*/
+	// update the screen
+
+	f.scr.Clear()
+	f.cursReset()
+
+	f.drawPortalList()
+	f.drawPortal()
+}
 
 // filter input to the editing buffer and general functions
 
-func (f *Frame) filterInput(input *tcell.EventKey) {
+func (f *Frame) filterInput(input *tcell.EventKey) portalSelection {
 	key := input.Key()
 
 	// escape toggles between editing and command mode
@@ -25,37 +46,36 @@ func (f *Frame) filterInput(input *tcell.EventKey) {
 		switch key {
 			case tcell.KeyDEL, tcell.KeyBackspace: f.delChar()
 			case tcell.KeyRune:                                  f.typeChar(input.Rune())
+			case tcell.KeyEnter:                                  return Current
+			case tcell.KeyTAB:                                    f.typeChar('\t')
 		}
 
 		f.showCurs()
 	} else if key == tcell.KeyRune { // move between buffers
 		switch ch := input.Rune(); ch {
 			case 'q': f.running = false
-			case 'h':
-				if f.index > 0 {
-					f.index -= 1
-					f.drawFrame()
-				}
-			case 'l':
-				if f.index < len(f.portals)-1 {
-					f.index += 1
-					f.drawFrame()
-				}
+			case 'h': f.movePortal(-1)
+			case 'l': f.movePortal(1)
+			case 'a': return All
 		}
 	}
 
 	f.scr.Show()
+
+	return None
 }
 
 // draw the screen and listen for input
 
-func (f *Frame) Start() error {
+func (f *Frame) Start() (string, error) {
 	if e := f.scr.Init(); e == nil {
-		//f.width, f.height = f.scr.Size()
+		defer f.scr.Fini() // close the screen when we exit
+
+		f.width, f.height = f.scr.Size()
 
 		// draw UI elements
 
-		//f.drawFrame()
+		f.drawFrame()
 
 		// handle input
 
@@ -65,21 +85,24 @@ func (f *Frame) Start() error {
 			input = f.scr.PollEvent()
 
 			switch k := input.(type) {
-				case *tcell.EventKey: f.filterInput(k)
-				case *tcell.EventResize: 
+				case *tcell.EventKey:
+					switch f.filterInput(k) { // return text, or not
+						case None: continue
+						case All: return f.returnAll(), nil
+						case Current: return f.portals[f.index].String(), nil
+					}
+				case *tcell.EventResize:
 					f.scr.Clear()
 
 					f.width, f.height = k.Size()
-					f.x, f.y = 0, 0
+					f.cursReset()
 
 					f.drawFrame()
 			}
 		}
-
-		f.scr.Fini()
 	} else {
-		return e
+		return "", e
 	}
 
-	return nil
+	return "", nil
 }

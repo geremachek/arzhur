@@ -1,6 +1,7 @@
 package frame
 
 import (
+	"strings"
 	"github.com/gdamore/tcell"
 	"github.com/geremachek/arzhur/portal"
 )
@@ -24,7 +25,7 @@ type Frame struct {
 
 // create a new frame
 
-func NewFrame(starters ...string) (*Frame, error) {
+func NewFrame(starters []string) (*Frame, error) {
 	if s, err := tcell.NewScreen(); err == nil {
 		ps := []portal.Portal{}
 
@@ -36,4 +37,16 @@ func NewFrame(starters ...string) (*Frame, error) {
 	} else {
 		return nil, err
 	}
+}
+
+// return all of the windows as a single string together
+
+func (f Frame) returnAll() string {
+	var all strings.Builder
+
+	for _, p := range f.portals {
+		all.WriteString(p.String() + "\n")
+	}
+
+	return all.String()
 }

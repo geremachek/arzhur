@@ -61,7 +61,7 @@ func (f *Frame) drawPortalList() {
 }
 
 func (f *Frame) drawPortal() {
-	for _, ch := range f.portals[f.index].Text() {
+	for _, ch := range f.portals[f.index].String() {
 		f.drawAtCurs(ch)
 
 		if f.x == f.width-1 && f.y == f.height-3 {

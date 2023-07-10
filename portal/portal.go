@@ -14,7 +14,7 @@ func NewPortal(text string) Portal {
 
 // return the text as a string
 
-func (p Portal) Text() string {
+func (p Portal) String() string {
 	return string(p.text)
 }
 
