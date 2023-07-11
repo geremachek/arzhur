@@ -71,12 +71,6 @@ func (f *Frame) Start() (string, error) {
 	if e := f.scr.Init(); e == nil {
 		defer f.scr.Fini() // close the screen when we exit
 
-		f.width, f.height = f.scr.Size()
-
-		// draw UI elements
-
-		f.drawFrame()
-
 		// handle input
 
 		var input tcell.Event
@@ -91,7 +85,8 @@ func (f *Frame) Start() (string, error) {
 						case All: return f.returnAll(), nil
 						case Current: return f.portals[f.index].String(), nil
 					}
-				case *tcell.EventResize:
+				case *tcell.EventResize: // this runs at start up as well.
+					print("test")
 					f.scr.Clear()
 
 					f.width, f.height = k.Size()
