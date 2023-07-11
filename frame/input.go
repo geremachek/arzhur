@@ -86,7 +86,6 @@ func (f *Frame) Start() (string, error) {
 						case Current: return f.portals[f.index].String(), nil
 					}
 				case *tcell.EventResize: // this runs at start up as well.
-					print("test")
 					f.scr.Clear()
 
 					f.width, f.height = k.Size()
