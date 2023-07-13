@@ -37,6 +37,8 @@ func (f *Frame) showCurs() {
 // toggle the cursor and input mode
 
 func (f *Frame) toggleEditing() {
+	// show the cursor only when we are in editing mode
+
 	if f.editing {
 		f.editing = false
 		f.scr.HideCursor()

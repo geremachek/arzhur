@@ -30,7 +30,7 @@ func (p *Portal) Insert(ch rune) {
 	p.text = append(p.text, ch)
 }
 
-// Delete the final character within the text box.
+// delete the final character within the text box.
 
 func (p *Portal) Del() {
 	if len := p.Length()-1; len > -1 {

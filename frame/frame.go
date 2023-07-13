@@ -29,6 +29,9 @@ func NewFrame(starters []string) (*Frame, error) {
 	if s, err := tcell.NewScreen(); err == nil {
 		ps := []portal.Portal{}
 
+
+		// convert each line of text into a "portal"
+
 		for _, s := range starters {
 			ps = append(ps, portal.NewPortal(s))
 		}
@@ -45,7 +48,7 @@ func (f Frame) returnAll() string {
 	var all strings.Builder
 
 	for _, p := range f.portals {
-		all.WriteString(p.String() + "\n")
+		all.WriteString(p.String() + "\n") // connected by newlines
 	}
 
 	return all.String()

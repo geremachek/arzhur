@@ -26,6 +26,8 @@ func main() {
 		}
 	}
 
+	// start the UI
+
 	if f, err := frame.NewFrame(windows); err == nil {
 		if out, err := f.Start(); err == nil {
 			fmt.Print(out) // print the text of the selected window(s)

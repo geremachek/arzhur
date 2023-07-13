@@ -5,7 +5,9 @@ import (
 	"github.com/gdamore/tcell"
 )
 
-func addstring(s tcell.Screen, style tcell.Style, x int, y int, text string) {
+// draw a line of text to the screen
+
+func addString(s tcell.Screen, style tcell.Style, x int, y int, text string) {
 	for i, ch := range text {
 		s.SetContent(i+x, y, ch, []rune{}, style)
 	}
@@ -23,7 +25,7 @@ func (f *Frame) typeChar(ch rune) {
 // remove a character from the screen
 
 func (f *Frame) delChar() {
-	if p := &f.portals[f.index]; p.Length() > 0 {
+	if p := &f.portals[f.index]; p.Length() > 0 { // only delete when there is something to!
 		p.Del()
 
 		f.cursMove(false)
@@ -44,14 +46,14 @@ func (f *Frame) drawPortalList() {
 	// write a text string at the bottom of the screen
 
 	writeLabel := func(style tcell.Style, label string) {
-		addstring(f.scr, style, curs, f.height-1, label)
+		addString(f.scr, style, curs, f.height-1, label)
 	}
 
 	for i, _ := range f.portals {
 		converted = strconv.Itoa(i+1) // the current index acts as a label for the editing window
 
 		if i == f.index {
-			writeLabel(style.Reverse(true), converted)
+			writeLabel(style.Reverse(true), converted) // highlight the current window
 		} else {
 			writeLabel(style, converted)
 		}
@@ -60,11 +62,13 @@ func (f *Frame) drawPortalList() {
 	}
 }
 
+// draw the window text
+
 func (f *Frame) drawPortal() {
 	for _, ch := range f.portals[f.index].String() {
 		f.drawAtCurs(ch)
 
-		if f.x == f.width-1 && f.y == f.height-3 {
+		if f.x == f.width-1 && f.y == f.height-3 { // fit the text to the screen
 			break
 		}
 
