@@ -28,6 +28,7 @@
 	- `arzhur-edit`: Edit an atom and replace the current line with the result
 	- `arzhur-peer`: Edit a selected part of the current volume
 	- `arzhur-line`: Edit the current line
+	- `arzhur-cursor`: Edit all of the current line's text up until the cursor
 
 **Screenshot:**
 

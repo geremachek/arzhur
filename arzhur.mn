@@ -4,3 +4,13 @@ arzhur \;infuse  arzhur ;nomen
 
 \;peer \;arzhur-edit arzhur-peer ;nomen
 \;spot \;spot \;arzhur-peer arzhur-line ;nomen
+
+;new ;new ;blank ;tether \;inscribe
+-1 \;traverse
+\;columns \;infix
+1 \;shift
+\;arzhur-line
+1 \;traverse
+0 \;infix
+1 \;shave
+arzhur-cursor ;nomen
