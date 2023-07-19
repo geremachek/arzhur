@@ -8,16 +8,16 @@ func (f *Frame) cursMove(forward bool) {
 	if forward {
 		if f.x == f.width-1 { // alllow line breaks
 			f.x = 0
-			f.y += 1
+			f.y++
 		} else {
-			f.x += 1
+			f.x++
 		}
 	} else {
 		if f.x == 0 && f.y != 0 { // return line breaks
 			f.x = f.width-1
-			f.y -= 1
+			f.y--
 		} else {
-			f.x -= 1
+			f.x--
 		}
 	}
 }
