@@ -32,16 +32,15 @@ func main() {
 		if out, err := f.Start(); err == nil {
 			fmt.Print(out) // print the text of the selected window(s)
 		} else {
-			printError("couldn't start interface")
+			printError(err)
 		}
 	} else {
-		printError("could not open screen")
+		printError(err)
 	}
 }
 
-// print an error message and return 1
+// print an error message
 
-func printError(msg string) {
-	fmt.Fprintf(os.Stderr, "arzhur: %s\n", msg)
-	os.Exit(1)
+func printError(err error) {
+	fmt.Fprintf(os.Stderr, "arzhur: %s\n", err)
 }
