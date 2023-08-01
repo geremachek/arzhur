@@ -43,4 +43,5 @@ func main() {
 
 func printError(err error) {
 	fmt.Fprintf(os.Stderr, "arzhur: %s\n", err)
+	os.Exit(1)
 }
