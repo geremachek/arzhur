@@ -4,6 +4,7 @@ arzhur \;infuse  arzhur ;nomen
 
 \;peer \;arzhur-edit arzhur-peer ;nomen
 \;spot \;spot \;arzhur-peer arzhur-line ;nomen
+\;spot \;span \;arzhur-peer arzhur-volume ;nomen
 
 ;new ;new ;blank ;tether \;inscribe
 -1 \;traverse
