@@ -51,5 +51,12 @@ func (f *Frame) toggleEditing() {
 // draw a character at the current cursor position
 
 func (f *Frame) drawAtCurs(ch rune) {
+	// display special characters
+
+	switch ch {
+		case '\n': ch = 'N'
+		case '\t': ch = 'T'
+	}
+
 	f.scr.SetContent(f.x, f.y, ch, []rune{}, tcell.StyleDefault)
 }

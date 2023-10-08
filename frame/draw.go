@@ -40,25 +40,32 @@ func (f *Frame) drawPortalList() {
 		style tcell.Style = tcell.StyleDefault
 		curs int = 0
 
-		converted string
+		label string
 	)
 
-	// write a text string at the bottom of the screen
+	// write a text string at the bottom of the screen and move the cursor
 
 	writeLabel := func(style tcell.Style, label string) {
 		addString(f.scr, style, curs, f.height-1, label)
+		curs += len(label)
 	}
 
 	for i, _ := range f.portals {
-		converted = strconv.Itoa(i+1) // the current index acts as a label for the editing window
-
-		if i == f.index {
-			writeLabel(style.Reverse(true), converted) // highlight the current window
+		if i == f.selected { // selected windows aren't numbered but marked with an "*"
+			label = "*"
 		} else {
-			writeLabel(style, converted)
+			label = strconv.Itoa(i+1) // the current index acts as a label for the editing window
 		}
 
-		curs += len(converted)+1
+		writeLabel(style, "[")
+
+		if i == f.index {
+			writeLabel(style.Reverse(true), label) // highlight the current window
+		} else {
+			writeLabel(style, label)
+		}
+
+		writeLabel(style, "] ")
 	}
 }
 
@@ -79,10 +86,9 @@ func (f *Frame) drawPortal() {
 // draw all of the UI elements
 
 func (f *Frame) drawFrame() {
+	f.scr.Clear()
+	f.cursReset()
+
 	f.drawPortalList()
 	f.drawPortal()
-
-	f.showCurs()
-
-	f.scr.Show()
 }

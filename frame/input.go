@@ -26,11 +26,34 @@ func (f *Frame) movePortal(dir int) {
 
 	// update the screen
 
-	f.scr.Clear()
-	f.cursReset()
+	f.drawFrame()
+}
 
-	f.drawPortalList()
-	f.drawPortal()
+// create a new window with the output of a command
+
+func (f *Frame) winFromCommand(p bool) {
+	if out, err := f.execFocused(p); err == nil {
+		f.newWindow(out)
+		f.drawFrame()
+	} // if there is an error, don't create a window
+}
+
+// replace the selection or focused window with the output of a command
+
+func (f *Frame) replaceWithOutput(p bool) {
+	if out, err := f.execFocused(p); err == nil {
+		// set the marked or focused text
+
+		if f.isMarked() {
+			f.setMarked(out)
+			f.index = f.selected
+		} else {
+			f.setFocused(out)
+		}
+
+		f.x = 0
+		f.drawFrame()
+	}
 }
 
 // filter input to the editing buffer and general functions
@@ -45,18 +68,34 @@ func (f *Frame) filterInput(input *tcell.EventKey) portalSelection {
 	} else if f.editing { // main editing mode
 		switch key {
 			case tcell.KeyDEL, tcell.KeyBackspace: f.delChar() // delete a character
-			case tcell.KeyRune:                                  f.typeChar(input.Rune()) // insert a character
-			case tcell.KeyEnter:                                  return Current // return the current line to stdout
-			case tcell.KeyTAB:                                    f.typeChar('\t') // handle tabs
+			case tcell.KeyRune:                    f.typeChar(input.Rune()) // insert a character
+			case tcell.KeyEnter:                   return Current // return the current line to stdout
+			case tcell.KeyTAB:                     f.typeChar('\t') // handle tabs
 		}
 
 		f.showCurs()
-	} else if key == tcell.KeyRune { // move between buffers or quit
+	} else if key == tcell.KeyRune { // parse commands
 		switch ch := input.Rune(); ch {
 			case 'q': f.running = false
 			case 'h': f.movePortal(-1)
 			case 'l': f.movePortal(1)
 			case 'a': return All
+			case 'n': // create a new, empty window
+				f.newWindow("")
+				f.drawFrame()
+			case 'd': // delete the last window
+				f.popWindow()
+				f.drawFrame()
+			case 'm': // mark/unmark the current window
+				f.markCurrent()
+				f.drawPortalList()
+			case 'c': // clear the focused text
+				f.setFocused("")
+				f.drawFrame()
+			case '!': f.winFromCommand(false) // open a new window for command output
+			case '<': f.replaceWithOutput(false) // replace the current window's/mark's text with output
+			case '>': f.winFromCommand(true) // pipe the marked text and create a new window
+			case '|': f.replaceWithOutput(true) // replace the marked text with piped text
 		}
 	}
 
@@ -83,15 +122,17 @@ func (f *Frame) Start() (string, error) {
 					switch f.filterInput(k) { // return text, or not
 						case None: continue
 						case All: return f.returnAll(), nil
-						case Current: return f.portals[f.index].String(), nil
+						case Current: return f.focusedText(), nil
 					}
 				case *tcell.EventResize: // this runs at start up as well.
+					f.width, f.height = k.Size()
+
 					f.scr.Clear()
 
-					f.width, f.height = k.Size()
-					f.cursReset()
-
 					f.drawFrame()
+					f.showCurs()
+
+					f.scr.Show()
 			}
 		}
 	} else {

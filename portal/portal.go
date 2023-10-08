@@ -37,3 +37,9 @@ func (p *Portal) Del() {
 		p.text = p.text[:len]
 	}
 }
+
+// set the text of the window
+
+func (p *Portal) Set(text string) {
+	p.text = []rune(text)
+}

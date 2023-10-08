@@ -3,15 +3,21 @@ package main
 import (
 	"os"
 	"fmt"
+	"flag"
 	"bufio"
 	"github.com/geremachek/arzhur/frame"
 )
 
 func main() {
+	empty := flag.Bool("n", false, "Open an empty window on start.")
+	flag.Parse()
+
 	var windows []string
 
-	if len(os.Args) > 1 { // read from arguments, if they are supplied.
-		windows = os.Args[1:]
+	if *empty {
+		windows = []string{""} // empty window
+	} else if args := flag.Args(); len(args) >= 1 { // read from arguments, if they are supplied.
+		windows = args
 	} else { // we are reading from stdin
 		scanner := bufio.NewScanner(os.Stdin)
 
@@ -22,7 +28,7 @@ func main() {
 		// if nothing came in through stdin, supply a conciliatory empty string
 
 		if len(windows) == 0 {
-			windows = append(windows, "")
+			windows = []string{""}
 		}
 	}
 
