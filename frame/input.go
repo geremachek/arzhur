@@ -130,7 +130,12 @@ func (f *Frame) Start() (string, error) {
 					f.scr.Clear()
 
 					f.drawFrame()
-					f.showCurs()
+
+					// only show the cursor in editing mode
+
+					if f.editing {
+						f.showCurs()
+					}
 
 					f.scr.Show()
 			}

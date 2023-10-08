@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"flag"
 	"bufio"
+	"strings"
 	"github.com/geremachek/arzhur/frame"
 )
 
 func main() {
 	empty := flag.Bool("n", false, "Open an empty window on start.")
+	noSplit := flag.Bool("s", false, "Don't split input into lines.")
 	flag.Parse()
 
 	var windows []string
@@ -21,8 +23,18 @@ func main() {
 	} else { // we are reading from stdin
 		scanner := bufio.NewScanner(os.Stdin)
 
-		for scanner.Scan() {
-			windows = append(windows, scanner.Text()) // treat each line of input as its own window
+		if *noSplit { // join input by newlines
+			builder := strings.Builder{}
+
+			for scanner.Scan() {
+				builder.WriteString(scanner.Text() + "\n")
+			}
+
+			windows = append(windows, builder.String()) // append the input as a single window
+		} else {
+			for scanner.Scan() {
+				windows = append(windows, scanner.Text()) // treat each line of input as its own window
+			}
 		}
 
 		// if nothing came in through stdin, supply a conciliatory empty string

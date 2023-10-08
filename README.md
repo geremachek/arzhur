@@ -1,6 +1,6 @@
 # 🗡 arzhur
 
-`arzhur` is a simple program that implements a interactive filter for the editing, execution and piping of arbitrary text.
+`arzhur` is a simple program that implements a interactive filter for the editing, execution, and piping of arbitrary text.
 
 **As a selection filter:**
 
@@ -39,20 +39,8 @@ Windows can be selected with the `h` and `l` keys, created with `n`, and deleted
 ```
 Usage of arzhur:
   -n	Open an empty window on start.
+  -s	Don't split input into lines.
 ```
-
-**Merlin:**
-
-`arzhur` comes with a small package (`arzhur.mn`) for basic `merlin` interaction.
-
-* Commands
-	- `arzhur`: Open the first atom on the stack for editing
-	- `arzhur-stack`: Open the entire stack for editing
-	- `arzhur-edit`: Edit an atom and replace the current line with the result
-	- `arzhur-peer`: Edit a selected part of the current volume
-	- `arzhur-line`: Edit the current line
-	- `arzhur-volume`: Edit the entire volume
-	- `arzhur-cursor`: Edit all of the current line's text up until the cursor
 
 **Screenshot:**
 
