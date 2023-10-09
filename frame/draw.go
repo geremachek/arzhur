@@ -22,6 +22,14 @@ func (f *Frame) typeChar(ch rune) {
 	f.cursMove(true)
 }
 
+// insert a string into the current window
+
+func (f *Frame) typeString(text string) {
+	for _, ch := range text {
+		f.typeChar(ch)
+	}
+}
+
 // remove a character from the screen
 
 func (f *Frame) delChar() {

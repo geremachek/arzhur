@@ -89,6 +89,10 @@ func (f *Frame) filterInput(input *tcell.EventKey) portalSelection {
 			case 'm': // mark/unmark the current window
 				f.markCurrent()
 				f.drawPortalList()
+			case 'M': // unmark the marked window
+				f.selected = -1
+				f.drawPortalList()
+			case 'p': f.typeString(f.markedText())
 			case 'c': // clear the focused text
 				f.setFocused("")
 				f.drawFrame()

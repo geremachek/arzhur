@@ -28,6 +28,8 @@ Windows can be selected with the `h` and `l` keys, created with `n`, and deleted
 	- `n`: Create a new, empty window
 	- `d`: Delete the last window
 	- `m`: Mark or unmark the current window
+	- `M`: Unmark the marked window
+	- `p`: Insert the marked text into the current window
 	- `c`: Clear the contents of the current window
 	- `!`: Execute the contents of the current window as a command, with output going to a new window
 	- `<`: Replace the current or marked window's text with the output of itself as a command
