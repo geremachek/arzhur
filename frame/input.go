@@ -93,6 +93,7 @@ func (f *Frame) filterInput(input *tcell.EventKey) portalSelection {
 				f.selected = -1
 				f.drawPortalList()
 			case 'p': f.typeString(f.markedText())
+			case 'N': f.typeChar('\n')
 			case 'c': // clear the focused text
 				f.setFocused("")
 				f.drawFrame()
