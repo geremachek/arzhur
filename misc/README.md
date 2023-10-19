@@ -10,3 +10,7 @@
 	- `arzhur-line`: Edit the current line
 	- `arzhur-volume`: Edit the entire volume
 	- `arzhur-cursor`: Edit all of the current line's text up until the cursor
+
+# `bwlch`
+	
+	`bwlch` is an experimental "file manager" built around arzhur. It's only a few lines so just read the script if you want to know how it works.

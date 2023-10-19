@@ -1,0 +1,14 @@
+#!/bin/sh
+# bwlch - file manager experiment
+
+while true ; do
+	file="$(ls -Fa | arzhur)"
+
+	if [ "$file" = ":" ]; then # enter command mode
+		"$(arzhur -n)"
+	elif [ -d "$file" ]; then
+		cd "$file" # move into directories
+	elif [ -f "$file" ]; then
+		$EDITOR "$file" # edit all other files as if they were text
+	fi
+done

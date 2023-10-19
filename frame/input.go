@@ -65,11 +65,12 @@ func (f *Frame) filterInput(input *tcell.EventKey) portalSelection {
 
 	if key == tcell.KeyESC {
 		f.toggleEditing()
+	} else if key == tcell.KeyEnter {
+		return Current // return the current line to stdout
 	} else if f.editing { // main editing mode
 		switch key {
 			case tcell.KeyDEL, tcell.KeyBackspace: f.delChar() // delete a character
 			case tcell.KeyRune:                    f.typeChar(input.Rune()) // insert a character
-			case tcell.KeyEnter:                   return Current // return the current line to stdout
 			case tcell.KeyTAB:                     f.typeChar('\t') // handle tabs
 		}
 

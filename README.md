@@ -21,6 +21,7 @@ Windows can be selected with the `h` and `l` keys, created with `n`, and deleted
 	- `ENTER`: Exit and print the contents of the current window to stdout
 * Command Mode
 	- `ESCAPE`: Enter editing mode
+	- `ENTER`: Exit and print the contents of the current window to stdout
 	- `h`: Go backwards a tab
 	- `l`: Go forwards a tab
 	- `a`: Exit and print the contents of all of the windows joined by newlines to stdout
