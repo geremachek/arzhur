@@ -12,5 +12,5 @@
 	- `arzhur-cursor`: Edit all of the current line's text up until the cursor
 
 # `bwlch`
-	
-	`bwlch` is an experimental "file manager" built around arzhur. It's only a few lines so just read the script if you want to know how it works.
+
+`bwlch` is an experimental "file manager" built around arzhur. It's only a few lines so just read the script if you want to know how it works.

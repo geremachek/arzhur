@@ -9,6 +9,6 @@ while true ; do
 	elif [ -d "$file" ]; then
 		cd "$file" # move into directories
 	elif [ -f "$file" ]; then
-		$EDITOR "$file" # edit all other files as if they were text
+		"$(arzhur -n)" "$file" # run a supplied command with the selected file as an argument
 	fi
 done

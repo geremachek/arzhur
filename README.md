@@ -2,19 +2,19 @@
 
 `arzhur` is a simple program that implements a interactive filter for the editing, execution, and piping of arbitrary text.
 
-**As a selection filter:**
+## Selection filter
 
 `arzhur` can receive text from either stdin or supplied arguments and will treat each argument or each line of input as a separate "window". Each window may be edited and printed to stdout by itself or joined with the other lines.
 
-**Window management:**
+## Window management
 
 Windows can be selected with the `h` and `l` keys, created with `n`, and deleted (only the final window) with `d`.
 
-**Acme-style command execution:**
+## Acme-style command execution
 
 `arzhur` implements a system for executing and piping text similar to that of `acme`. The `!` command functions as an equivalent to the middle click, executing the focused text as a command a creating a new window for its output. `<` replaces the executed text, or the contents of the marked window with output. `>` pipes the marked text, putting the output in a new window. `|` pipes and replaces at once.
 
-**Keybinds:**
+## Keybinds
 
 * Editing Mode
 	- `ESCAPE`: Enter command mode
@@ -38,7 +38,7 @@ Windows can be selected with the `h` and `l` keys, created with `n`, and deleted
 	- `>`: Pipe the marked text to the current window's command put the output in a new window
 	- `|`: `<` and `>` combined.
 
-**Options:**
+## Options
 
 ```
 Usage of arzhur:
@@ -46,6 +46,6 @@ Usage of arzhur:
   -s	Don't split input into lines.
 ```
 
-**Screenshot:**
+## Screenshot
 
 ![arzhur editing the output of the date command](in-use.png "arzhur editing the output of the date command")
